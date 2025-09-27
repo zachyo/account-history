@@ -2,6 +2,8 @@
 interface FetchAddressTransactionsArgs {
   address: string;
   offset?: number;
+  apiUrl: string;
+  limit?: number;
 }
 
 // Output from our function
@@ -87,8 +89,11 @@ interface TransactionEvent {
 export async function fetchAddressTransactions({
   address,
   offset = 0,
+  apiUrl,
+  limit = 20,
 }: FetchAddressTransactionsArgs): Promise<FetchAddressTransactionsResponse> {
-  const url = `https://api.testnet.hiro.so/extended/v2/addresses/${address}/transactions?limit=20&offset=${offset}`;
+  console.log(apiUrl)
+  const url = `${apiUrl}/extended/v2/addresses/${address}/transactions?limit=${limit}&offset=${offset}`;
 
   const response = await fetch(url);
 
@@ -97,5 +102,6 @@ export async function fetchAddressTransactions({
   }
 
   const data = await response.json();
+  console.log({data, "here" : "j"})
   return data as FetchAddressTransactionsResponse;
 }

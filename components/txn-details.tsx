@@ -91,18 +91,18 @@ export function TransactionDetail({ result }: TransactionDetailProps) {
     getTransactionInformationByType(result);
 
   return (
-    <div className="flex items-center p-4 border-l-2 border-transparent hover:border-blue-500 transition-all justify-between">
+    <div className="flex flex-col md:flex-row items-start md:items-center p-4 border-l-2 border-transparent hover:border-blue-500 transition-all justify-between gap-4 md:gap-0">
       <div className="flex items-center gap-4">
         <Icon className="h-10 w-10 rounded-full p-2 border border-gray-700" />
 
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <span className="font-medium">{primaryTitle}</span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-medium break-all">{primaryTitle}</span>
             {secondaryTitle && (
               <span className="text-gray-500">({secondaryTitle})</span>
             )}
           </div>
-          <div className="flex items-center gap-1 font-bold text-xs text-gray-500">
+          <div className="flex items-center gap-1 font-bold text-xs text-gray-500 flex-wrap">
             {tags.map((tag) => (
               <span key={tag}>{tag}</span>
             ))}
@@ -118,7 +118,7 @@ export function TransactionDetail({ result }: TransactionDetailProps) {
         </div>
       </div>
 
-      <div className="flex flex-col items-end gap-2">
+      <div className="flex flex-col items-start md:items-end gap-2">
         <div className="flex items-center gap-2">
           <span>{abbreviateTxnId(result.tx.tx_id)}</span>
           <span>•</span>
