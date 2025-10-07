@@ -81,7 +81,6 @@ tx_id,block_height,timestamp,amount,sender,recipient,type
 ### Framework Compatibility
 - Should work with existing Next.js setup
 - Maintain current state management approach
-- Use existing styling methodology (CSS modules/Tailwind/styled-components)
 
 ### Performance Considerations
 - Lazy load export functionality
