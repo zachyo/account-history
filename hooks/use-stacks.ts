@@ -5,7 +5,7 @@ import {
   isConnected,
   request,
   showConnect,
-  type UserData,
+  type UserData,  
   UserSession,  
 } from "@stacks/connect";
 import { GetAddressesResult } from "@stacks/connect/dist/types/methods";

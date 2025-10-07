@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { connect, disconnect, isConnected,  } from '@stacks/connect';
+import { NetworkToggle } from "./network-toggle";
 
 export function Navbar() {
   // next.js router to handle redirecting to different pages
@@ -34,11 +35,12 @@ export function Navbar() {
 
     // redirect to /SP... which will show the txn history for this address
     router.push(`/${searchAddress}`);
+    setSearchAddress("")
   }
   const address = userData?.addresses?.find(addr => addr.symbol === "STX")?.address  
 
   return (
-    <nav className="flex w-full items-center justify-between gap-4 p-4 h-16 border-b border-gray-500">
+    <nav className="flex flex-col md:flex-row w-full items-center justify-between gap-4 p-4 border-b border-gray-500">
       <Link href="/" className="text-2xl font-bold">
         Stacks Account History
       </Link>
@@ -46,7 +48,7 @@ export function Navbar() {
       <input
         type="text"
         placeholder="ST..."
-        className="w-96 rounded-lg bg-gray-700  px-4 py-2 text-sm"
+        className="w-full md:w-96 rounded-lg bg-gray-700  px-4 py-2 text-sm"
         onChange={(e) => setSearchAddress(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
@@ -55,6 +57,8 @@ export function Navbar() {
           }
         }}
       />
+      
+      {/* <NetworkToggle /> */}
 
       <div className="flex items-center gap-2">
         {/* If userData exists, show the disconnect wallet button, else show the connect wallet button */}
@@ -63,8 +67,9 @@ export function Navbar() {
             {/* button for quickly viewing the user's own transaction history */}
             <button
               type="button"
-              onClick={() =>
+              onClick={() =>{
                 router.push(`/${address}`)
+                setSearchAddress("")}
               }
               className="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >

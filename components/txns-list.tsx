@@ -6,22 +6,28 @@ import {
   type FetchAddressTransactionsResponse,
 } from "@/lib/fetch-address-transactions";
 import { TransactionDetail } from "./txn-details";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNetwork } from "@/contexts/network-context";
 
 interface TransactionsListProps {
   address: string;
-  transactions: FetchAddressTransactionsResponse;
+  initialTransactions: FetchAddressTransactionsResponse;
 }
 
 export function TransactionsList({
   address,
-  transactions,
+  initialTransactions,
 }: TransactionsListProps) {
-  const [allTxns, setAllTxns] = useState(transactions);
+  const [allTxns, setAllTxns] = useState(initialTransactions);
+  const { getApiUrl } = useNetwork();
+
+  useEffect(() => {
+    setAllTxns(initialTransactions);
+  }, [initialTransactions]);
 
   // Load another 20 txns
   async function loadMoreTxns() {
-      
+    const apiUrl = getApiUrl();
     // The new offset to fetch transaction is the offset we used
     // in the last request + the number of txns we fetched previously
     // e.g. if initially we fetched offset = 0 with limit = 20
@@ -30,6 +36,7 @@ export function TransactionsList({
     const newTxns = await fetchAddressTransactions({
       address,
       offset: allTxns.offset + allTxns.limit,
+      apiUrl,
     });
 
     setAllTxns({
